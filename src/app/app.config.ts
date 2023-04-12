@@ -8,12 +8,15 @@ export default registerAs('appConfigs', (): AppConfigs => {
 
   return {
     connectionString: validatedEnvs.CONNECTION_STRING,
+    jwtSecretKey: validatedEnvs.JWT_SECRET_KEY,
   };
 });
 
 class EnvironmentVariables {
   @IsString()
   CONNECTION_STRING: string;
+  @IsString()
+  JWT_SECRET_KEY: string;
 }
 
 function validate(config: Record<string, unknown>) {
