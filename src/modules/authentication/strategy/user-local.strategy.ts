@@ -1,23 +1,22 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { userJwtStrategy } from '../constant';
+import { userLocalStrategy } from '../constant';
+import { UserService } from '@src/modules/user/user.service';
 
 @Injectable()
 export class LocalUserStrategy extends PassportStrategy(
   Strategy,
-  userJwtStrategy,
+  userLocalStrategy,
 ) {
-  constructor() {
+  constructor(private readonly userService: UserService) {
     super();
   }
 
   async validate(mobileNumber: string, password: string): Promise<any> {
-    // const user = await this.userAuthService.validateUser(
-    //   mobileNumber,
-    //   password,
-    // );
+    const user = await this.userService.validateUser(mobileNumber, password);
+    console.log('run validate');
 
-    return 'user';
+    return user;
   }
 }

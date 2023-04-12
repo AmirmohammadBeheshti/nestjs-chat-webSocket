@@ -2,8 +2,10 @@ import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { ApiTags } from '@nestjs/swagger';
 import { UserLocalGuard } from './guard/user-local.guard';
-import { RegisterDto } from './dto/request';
+import { LoginDto, RegisterDto } from './dto/request';
 import { UserSerializer } from '../user/user.serializer';
+import { User } from '@prisma/client';
+import { GetUser } from '../shared/decorators/get-user.decorator.decorator';
 
 @ApiTags('User-auth')
 @Controller('authentication')
@@ -15,11 +17,11 @@ export class AuthenticationController {
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     const register = await this.authenticationService.register(registerDto);
-    return this.userSerializer.serialize(register);
+    return register;
   }
   @UseGuards(UserLocalGuard)
   @Post('login')
-  async login() {
-    return 'a';
+  async login(@GetUser() user: User, @Body() loginDto: LoginDto) {
+    return user;
   }
 }
