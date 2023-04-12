@@ -15,6 +15,9 @@ export class UserPrismaRepository extends BasePrismaRepository<
   Prisma.UserDeleteManyArgs
 > {
   constructor(public prismaClient: PrismaClient) {
-    super(prismaClient.user);
+    super(prismaClient.user, {
+      NOT_FOUND: 'کاربر وجود ندارد',
+      DUPLICATE: 'کاربر تکراری است',
+    });
   }
 }

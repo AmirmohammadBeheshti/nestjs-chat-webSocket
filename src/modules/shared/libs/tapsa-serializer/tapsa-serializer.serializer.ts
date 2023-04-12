@@ -24,30 +24,12 @@ export abstract class BaseSerializer<Tentity, Trodto> {
     );
   }
 
-  public markSerializableValue(
-    value: Tentity,
-    outputType?: string,
-  ): Serializable<Trodto> {
-    return new Serializable<Trodto>(
-      this.serialize.bind(this, value, outputType),
-    );
-  }
-
   public markSerializableCollection(
     values: Tentity[],
     outputType?: string,
   ): Serializable<Trodto[]> {
     return new Serializable<Trodto[]>(
       this.serializeCollection.bind(this, values, outputType),
-    );
-  }
-
-  public markSerializablePaginatedValue(
-    value: Pagination<Tentity>,
-    outputType?: string,
-  ): PaginatedSerializable<Trodto> {
-    return new PaginatedSerializable<Trodto>(
-      this.serializePaginated.bind(this, value, outputType),
     );
   }
 }

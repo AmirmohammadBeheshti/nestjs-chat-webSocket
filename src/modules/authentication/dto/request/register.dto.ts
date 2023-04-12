@@ -17,6 +17,13 @@ export class RegisterDto {
   @IsString()
   lastName: string;
   @ApiProperty({
+    default: '0218216699',
+    required: true,
+  })
+  @IsNotEmpty()
+  @IsString()
+  mobile: string;
+  @ApiProperty({
     default: 'password123',
     required: true,
   })

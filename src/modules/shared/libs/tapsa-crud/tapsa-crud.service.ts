@@ -1,6 +1,5 @@
 import {
-  HttpException,
-  HttpStatus,
+  ConflictException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
@@ -37,10 +36,7 @@ export abstract class BaseService<
       if (error instanceof EntityRelationNotFound) {
         throw new NotFoundException('مجودیت یکی از روابط یافت نشد');
       } else if (error instanceof EntityDuplicate) {
-        throw new HttpException(
-          this.errorMessage.DUPLICATE,
-          HttpStatus.CONFLICT,
-        );
+        throw new ConflictException(this.errorMessage.DUPLICATE);
       }
       throw new InternalServerErrorException(error);
     }
@@ -53,10 +49,7 @@ export abstract class BaseService<
       if (error instanceof EntityRelationNotFound) {
         throw new NotFoundException('مجودیت یکی از روابط یافت نشد');
       } else if (error instanceof EntityDuplicate) {
-        throw new HttpException(
-          this.errorMessage.DUPLICATE,
-          HttpStatus.CONFLICT,
-        );
+        throw new ConflictException(this.errorMessage.DUPLICATE);
       }
       throw new InternalServerErrorException(error);
     }
@@ -71,10 +64,7 @@ export abstract class BaseService<
       } else if (error instanceof EntityRelationNotFound) {
         throw new NotFoundException('مجودیت یکی از روابط یافت نشد');
       } else if (error instanceof EntityDuplicate) {
-        throw new HttpException(
-          this.errorMessage.DUPLICATE,
-          HttpStatus.CONFLICT,
-        );
+        throw new ConflictException(this.errorMessage.DUPLICATE);
       }
       throw new InternalServerErrorException(error);
     }
@@ -87,10 +77,7 @@ export abstract class BaseService<
       if (error instanceof NotFoundException) {
         throw new NotFoundException(this.errorMessage.NOT_FOUND);
       } else if (error instanceof EntityDuplicate) {
-        throw new HttpException(
-          this.errorMessage.DUPLICATE,
-          HttpStatus.CONFLICT,
-        );
+        throw new ConflictException(this.errorMessage.DUPLICATE);
       }
       throw new InternalServerErrorException(error);
     }

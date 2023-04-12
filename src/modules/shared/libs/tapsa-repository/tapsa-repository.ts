@@ -1,5 +1,9 @@
 import { Prisma } from '@prisma/client';
-
+import {
+  NotFoundException,
+  InternalServerErrorException,
+  ConflictException,
+} from '@nestjs/common';
 import {
   IPaginationLinks,
   IPaginationOptions,
@@ -12,6 +16,7 @@ import {
 } from './tapsa-repository.type';
 import { Id } from '../../types';
 import { isNil } from '../../helpers';
+import { ServiceErrorMessage } from '../tapsa-crud';
 
 export abstract class BasePrismaRepository<
   Tentity,
@@ -24,7 +29,10 @@ export abstract class BasePrismaRepository<
   DO extends { where: Record<string, any> },
   DA extends { where?: Record<string, any> },
 > {
-  constructor(private readonly repo: any) {}
+  constructor(
+    private readonly repo: any,
+    private readonly errorMessage: ServiceErrorMessage,
+  ) {}
 
   calculateOffset(take: number, page: number) {
     return take * (page - 1);
@@ -126,15 +134,15 @@ export abstract class BasePrismaRepository<
     try {
       return await this.repo.create(obj);
     } catch (error) {
-      if ((error as Prisma.PrismaClientKnownRequestError).code === 'P2002') {
-        throw new EntityDuplicate('entity is duplicated');
+      console.log(error);
+      if ((error as Prisma.PrismaClientKnownRequestError).code === 'P2025') {
+        throw new NotFoundException('مجودیت یکی از روابط یافت نشد');
       } else if (
-        (error as Prisma.PrismaClientKnownRequestError).code === 'P2025'
+        (error as Prisma.PrismaClientKnownRequestError).code === 'P2002'
       ) {
-        throw new EntityRelationNotFound('relation entities not found');
-      } else {
-        throw error;
+        throw new ConflictException(this.errorMessage.DUPLICATE);
       }
+      throw new InternalServerErrorException(error);
     }
   }
 
