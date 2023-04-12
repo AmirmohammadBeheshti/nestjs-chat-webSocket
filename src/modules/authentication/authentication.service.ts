@@ -2,15 +2,14 @@ import { Injectable, Inject } from '@nestjs/common';
 import { RegisterDto } from './dto/request';
 import { UserService } from '../user/user.service';
 import { Prisma } from '@prisma/client';
-import { IUserJwt } from '../jwt/types';
 import { JwtService } from '@nestjs/jwt';
-import { UserJwtSecret } from '../jwt/constants/user-jwt.constant';
+import { IUserJwt } from './types';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
-    @Inject(UserJwtSecret) private readonly userJwtService: JwtService,
+    private readonly userJwtService: JwtService,
   ) {}
   async register(register: RegisterDto) {
     const registerObj: Prisma.UserCreateArgs = {

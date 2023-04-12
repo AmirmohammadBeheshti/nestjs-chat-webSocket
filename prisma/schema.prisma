@@ -18,4 +18,5 @@ model User {
   mobile    String    @unique() @db.VarChar(255) @default("09152622703")
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamptz(0)
+  deletedAt         DateTime?          @map("deleted_at") @db.Timestamptz(0)
 }

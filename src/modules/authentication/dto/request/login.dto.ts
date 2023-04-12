@@ -8,7 +8,7 @@ export class LoginDto {
   })
   @IsNotEmpty()
   @IsString()
-  mobile: string;
+  username: string;
   @ApiProperty({
     default: 'password123',
     required: true,

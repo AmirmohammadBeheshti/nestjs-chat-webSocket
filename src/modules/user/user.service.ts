@@ -22,6 +22,7 @@ export class UserService {
     if (!this.verifyUserPassword(findUser, password)) {
       throw new UnauthorizedException();
     }
+    return findUser;
   }
 
   async getOne(mobileNumber) {
