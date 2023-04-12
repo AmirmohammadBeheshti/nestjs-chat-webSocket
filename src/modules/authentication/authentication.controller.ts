@@ -2,10 +2,9 @@ import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDto, RegisterDto } from './dto/request';
-import { UserSerializer } from '../user/user.serializer';
 import { User } from '@prisma/client';
 import { GetUser } from '../shared/decorators/get-user.decorator.decorator';
-import { LocalAuthGuard } from './local-auth.guard';
+import { LocalAuthGuard } from './guard/local-auth.guard';
 
 @ApiTags('User-auth')
 @Controller('authentication')
