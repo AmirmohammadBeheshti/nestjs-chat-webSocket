@@ -24,12 +24,7 @@ export class AuthenticationService {
     const createUser = await this.userService.addUser(registerObj);
     return await this.generateJwtToken({ id: createUser.id });
   }
-  async validateUser(mobileNumber: string, password: string) {
-    const user = await this.userService.getOne({ mobileNumber });
-    return user;
-  }
   async verifyJwtToken(token: string, jwtSecret: string = JwtSecret) {
-    console.log('lo');
     return await this.userJwtService.verify(token, { secret: jwtSecret });
   }
   async generateJwtToken(userPayload: IUserJwt) {

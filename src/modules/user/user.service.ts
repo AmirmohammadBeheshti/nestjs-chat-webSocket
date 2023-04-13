@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserPrismaRepository } from './user.repository';
 import { Prisma, User } from '@prisma/client';
 import { hash, verify } from 'argon2';
+import { UserPrismaRepository } from './user.repository';
 
 @Injectable()
 export class UserService {

@@ -15,8 +15,19 @@ model User {
   firstName String    @map("first_name")
   lastName  String    @map("last_name")
   password  String
-  mobile    String    @unique() @db.VarChar(255) @default("09152622703")
+  mobile    String    @unique() @default("09152622703") @db.VarChar(255)
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(0)
   updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamptz(0)
-  deletedAt         DateTime?          @map("deleted_at") @db.Timestamptz(0)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(0)
+  Message   Message[]
+}
+
+model Message {
+  id        Int       @id @default(autoincrement())
+  content   String
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamptz(0)
+  updatedAt DateTime? @default(now()) @map("updated_at") @db.Timestamptz(0)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(0)
+  userId    Int
 }
