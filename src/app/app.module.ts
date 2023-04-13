@@ -14,7 +14,7 @@ const configModuleForRoot = ConfigModule.forRoot({
   load: [appConfig],
 });
 @Module({
-  imports: [ChatModule, configModuleForRoot, AuthenticationModule, UserModule],
+  imports: [configModuleForRoot, AuthenticationModule, UserModule, ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })

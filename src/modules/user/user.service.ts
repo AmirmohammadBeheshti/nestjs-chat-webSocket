@@ -19,12 +19,15 @@ export class UserService {
   async validateUser(password: string, mobileNumber: string) {
     const findUser = await this.getOne(mobileNumber);
     if (!findUser) throw new UnauthorizedException();
-    if (!this.verifyUserPassword(findUser, password)) {
+    const verifyPass = await this.verifyUserPassword(findUser, password);
+    if (!verifyPass) {
       throw new UnauthorizedException();
     }
     return findUser;
   }
-
+  async getOneById(id: number) {
+    return await this.userRepo.getOne({ where: { id: id } });
+  }
   async getOne(mobileNumber) {
     return await this.userRepo.getOne({ where: { mobile: mobileNumber } });
   }

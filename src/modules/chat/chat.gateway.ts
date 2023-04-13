@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import {
   MessageBody,
@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import appConfig from 'src/app/app.config';
+import { WsJwtGuard } from '../authentication/guard/ws-jwt.guard';
 
 @WebSocketGateway(3001)
 export class ChatGateway {
@@ -18,6 +19,7 @@ export class ChatGateway {
   @WebSocketServer()
   server: Server;
 
+  // @UseGuards(WsJwtGuard)
   @SubscribeMessage('send_message')
   listenForMessages(@MessageBody() data: string) {
     this.server.sockets.emit(

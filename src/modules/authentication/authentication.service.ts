@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { Prisma } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { IUserJwt } from './types';
+import { JwtSecret } from './constant/jwt-secret.constant';
 
 @Injectable()
 export class AuthenticationService {
@@ -26,6 +27,9 @@ export class AuthenticationService {
   async validateUser(mobileNumber: string, password: string) {
     const user = await this.userService.getOne({ mobileNumber });
     return user;
+  }
+  async verifyJwtToken(token: string, jwtSecret: string) {
+    return await this.userJwtService.verify(token, { secret: jwtSecret });
   }
   async generateJwtToken(userPayload: IUserJwt) {
     return {
