@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Socket } from 'socket.io';
-import { parse } from 'cookie';
 import { WsException } from '@nestjs/websockets';
 import { UserService } from '../user/user.service';
 import { JwtSecret } from '../authentication/constant';
 import { MessagePrismaRepository } from './message.repository';
-import { Prisma, User } from '@prisma/client';
-
 @Injectable()
 export class ChatService {
   constructor(
@@ -16,10 +13,9 @@ export class ChatService {
     private messageRepo: MessagePrismaRepository,
   ) {}
   async getUserFromSocket(socket: Socket) {
-    console.log('3Run');
     const cookie = socket?.handshake?.headers;
     if (!cookie?.authorization) {
-      throw new WsException('Invalid credentials.');
+      socket._error('ddd');
     }
     const { authorization: authenticationToken } = cookie;
     const verifyToken = await this.authenticationService.verifyJwtToken(

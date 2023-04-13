@@ -18,7 +18,6 @@ export class AuthenticationController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@GetUser() user: User, @Body() loginDto: LoginDto) {
-    console.log(user);
     return this.authenticationService.generateJwtToken({
       id: user.id,
     });

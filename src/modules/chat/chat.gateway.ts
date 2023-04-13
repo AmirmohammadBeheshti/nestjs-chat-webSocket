@@ -1,4 +1,4 @@
-import { Inject, UseGuards } from '@nestjs/common';
+import { Inject, UseFilters } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import {
   MessageBody,
@@ -10,10 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import appConfig from 'src/app/app.config';
-import { WsGuard } from '../authentication/guard/ws.guard';
-import { GetUser } from '../shared/decorators/get-user.decorator.decorator';
 import { ChatService } from './chat.service';
-
 @WebSocketGateway(3001)
 export class ChatGateway implements OnGatewayConnection {
   constructor(
