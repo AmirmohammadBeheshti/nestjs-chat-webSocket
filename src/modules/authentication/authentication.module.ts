@@ -7,8 +7,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { WsJwtGuard } from './guard/ws-jwt.guard';
 import { JwtSecret } from './constant/jwt-secret.constant';
+import { JwtAuthGuard } from './guard/jwt.guard';
+import { WsGuard } from './guard/ws.guard';
 
 @Module({
   imports: [

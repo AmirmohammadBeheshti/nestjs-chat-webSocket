@@ -1,3 +1,3 @@
 export interface IUserJwt {
-  id: string;
+  id: number;
 }

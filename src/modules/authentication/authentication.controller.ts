@@ -20,7 +20,7 @@ export class AuthenticationController {
   async login(@GetUser() user: User, @Body() loginDto: LoginDto) {
     console.log(user);
     return this.authenticationService.generateJwtToken({
-      id: user.id.toString(),
+      id: user.id,
     });
   }
 }
